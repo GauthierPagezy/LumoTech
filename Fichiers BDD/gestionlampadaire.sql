@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 10 mars 2023 à 09:29
+-- Généré le : ven. 10 mars 2023 à 16:01
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -29,30 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `action` (
   `actionID` int(11) NOT NULL,
-  `désignation` varchar(10) NOT NULL
+  `designation` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `action`
 --
 
-INSERT INTO `action` (`actionID`, `désignation`) VALUES
+INSERT INTO `action` (`actionID`, `designation`) VALUES
 (1, 'allumé'),
 (2, 'éteint');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `adresse`
---
-
-CREATE TABLE `adresse` (
-  `adID` int(11) NOT NULL,
-  `adVille` varchar(50) NOT NULL,
-  `adCP` int(11) NOT NULL,
-  `adVoie` varchar(50) NOT NULL,
-  `adNumVoie` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -90,9 +76,10 @@ CREATE TABLE `historiquemanuel` (
 
 CREATE TABLE `lampadaire` (
   `lampID` int(11) NOT NULL,
-  `adID` int(11) NOT NULL,
-  `lampMode` tinyint(1) NOT NULL,
-  `etat` tinyint(1) NOT NULL
+  `ville` varchar(30) NOT NULL,
+  `codepostal` int(30) NOT NULL,
+  `voie` int(11) NOT NULL,
+  `numero` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -109,6 +96,13 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`userID`, `userNom`, `userMail`, `userPassword`) VALUES
+(1, 'Root', 'root@root.com', 'root');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -117,12 +111,6 @@ CREATE TABLE `utilisateur` (
 --
 ALTER TABLE `action`
   ADD PRIMARY KEY (`actionID`);
-
---
--- Index pour la table `adresse`
---
-ALTER TABLE `adresse`
-  ADD PRIMARY KEY (`adID`);
 
 --
 -- Index pour la table `historiqueautomatique`
@@ -143,8 +131,7 @@ ALTER TABLE `historiquemanuel`
 -- Index pour la table `lampadaire`
 --
 ALTER TABLE `lampadaire`
-  ADD PRIMARY KEY (`lampID`),
-  ADD KEY `adID` (`adID`);
+  ADD PRIMARY KEY (`lampID`);
 
 --
 -- Index pour la table `utilisateur`
@@ -163,12 +150,6 @@ ALTER TABLE `action`
   MODIFY `actionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `adresse`
---
-ALTER TABLE `adresse`
-  MODIFY `adID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `lampadaire`
 --
 ALTER TABLE `lampadaire`
@@ -178,7 +159,7 @@ ALTER TABLE `lampadaire`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
@@ -198,12 +179,6 @@ ALTER TABLE `historiquemanuel`
   ADD CONSTRAINT `historiquemanuel_ibfk_1` FOREIGN KEY (`lampID`) REFERENCES `lampadaire` (`lampID`),
   ADD CONSTRAINT `historiquemanuel_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `utilisateur` (`userID`),
   ADD CONSTRAINT `historiquemanuel_ibfk_3` FOREIGN KEY (`actionID`) REFERENCES `action` (`actionID`);
-
---
--- Contraintes pour la table `lampadaire`
---
-ALTER TABLE `lampadaire`
-  ADD CONSTRAINT `lampadaire_ibfk_1` FOREIGN KEY (`adID`) REFERENCES `adresse` (`adID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
