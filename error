@@ -1,7 +1,2 @@
-Host is already in use by another container
-
-ERROR: for site_www_1  Cannot start service www: driver failed programming external connectivity on endpoint site_www_1 (4bd7e6a2d8555950d54fa8a7c64d0677a56a820b50b898a46f670d771dabd536): Error starting uStarting site_db_1         ... done
-Starting site_phpmyadmin_1 ... done
-
-ERROR: for www  Cannot start service www: driver failed programming external connectivity on endpoint site_www_1 (4bd7e6a2d8555950d54fa8a7c64d0677a56a820b50b898a46f670d771dabd536): Error starting userland proxy: listen tcp4 0.0.0.0:80: bind: address already in use
-ERROR: Encountered errors while bringing up the project.
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                               NAMES
+1809a918e830   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   7 minutes ago   Up 6 minutes   80/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   site_phpmyadmin_1
