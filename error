@@ -1,2 +1,0 @@
-CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                               NAMES
-1809a918e830   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   7 minutes ago   Up 6 minutes   80/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   site_phpmyadmin_1
