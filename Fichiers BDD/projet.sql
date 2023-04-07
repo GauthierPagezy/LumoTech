@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 29 mars 2023 à 09:53
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Généré le : ven. 07 avr. 2023 à 09:44
+-- Version du serveur : 10.4.27-MariaDB
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `action` (
   `actionID` int(11) NOT NULL,
   `designation` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `action`
@@ -47,13 +47,22 @@ INSERT INTO `action` (`actionID`, `designation`) VALUES
 --
 
 CREATE TABLE `historiqueautomatique` (
+  `idAuto` int(11) NOT NULL,
   `lampID` int(11) NOT NULL,
   `actionID` int(11) NOT NULL,
   `dateTime` datetime NOT NULL DEFAULT current_timestamp(),
   `temperature` double NOT NULL,
   `luminosite` double NOT NULL,
   `nbPassages` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `historiqueautomatique`
+--
+
+INSERT INTO `historiqueautomatique` (`idAuto`, `lampID`, `actionID`, `dateTime`, `temperature`, `luminosite`, `nbPassages`) VALUES
+(1, 1, 1, '2023-04-05 11:59:04', 50, 400, 15),
+(2, 1, 1, '2022-03-05 11:59:06', 50, 400, 15);
 
 -- --------------------------------------------------------
 
@@ -62,11 +71,19 @@ CREATE TABLE `historiqueautomatique` (
 --
 
 CREATE TABLE `historiquemanuel` (
+  `idManuel` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `lampID` int(11) NOT NULL,
   `dateTime` datetime NOT NULL DEFAULT current_timestamp(),
   `actionID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `historiquemanuel`
+--
+
+INSERT INTO `historiquemanuel` (`idManuel`, `userID`, `lampID`, `dateTime`, `actionID`) VALUES
+(1, 1, 1, '2023-04-07 09:40:36', 2);
 
 -- --------------------------------------------------------
 
@@ -78,11 +95,20 @@ CREATE TABLE `lampadaire` (
   `lampID` int(11) NOT NULL,
   `ville` varchar(30) NOT NULL,
   `codepostal` int(30) NOT NULL,
-  `voie` int(11) NOT NULL,
+  `voie` varchar(30) NOT NULL,
   `numero` int(11) NOT NULL,
   `mode` varchar(15) NOT NULL,
   `etat` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `lampadaire`
+--
+
+INSERT INTO `lampadaire` (`lampID`, `ville`, `codepostal`, `voie`, `numero`, `mode`, `etat`) VALUES
+(1, 'Paris', 75013, 'Avenue d\'Italie', 43, 'automatique', 1),
+(2, 'Paris', 75013, 'Avenue d\'Italie', 34, 'automatique', 0),
+(3, 'Suresnes', 92150, 'Boulevard des cuissards', 69, 'manuel', 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +122,7 @@ CREATE TABLE `users` (
   `userPrenom` varchar(30) NOT NULL,
   `userMail` varchar(30) NOT NULL,
   `userPassword` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -119,6 +145,7 @@ ALTER TABLE `action`
 -- Index pour la table `historiqueautomatique`
 --
 ALTER TABLE `historiqueautomatique`
+  ADD PRIMARY KEY (`idAuto`),
   ADD KEY `lampID` (`lampID`),
   ADD KEY `actionID` (`actionID`);
 
@@ -126,6 +153,7 @@ ALTER TABLE `historiqueautomatique`
 -- Index pour la table `historiquemanuel`
 --
 ALTER TABLE `historiquemanuel`
+  ADD PRIMARY KEY (`idManuel`),
   ADD KEY `lampID` (`lampID`),
   ADD KEY `userID` (`userID`),
   ADD KEY `actionID` (`actionID`);
@@ -153,10 +181,22 @@ ALTER TABLE `action`
   MODIFY `actionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT pour la table `historiqueautomatique`
+--
+ALTER TABLE `historiqueautomatique`
+  MODIFY `idAuto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `historiquemanuel`
+--
+ALTER TABLE `historiquemanuel`
+  MODIFY `idManuel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT pour la table `lampadaire`
 --
 ALTER TABLE `lampadaire`
-  MODIFY `lampID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lampID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `users`
