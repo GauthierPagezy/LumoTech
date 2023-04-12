@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ControleLampaider</string>
+    <string name="num_ro_id">"Numéro id : "</string>
+</resources>
